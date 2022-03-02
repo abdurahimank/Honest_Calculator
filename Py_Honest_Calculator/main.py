@@ -1,94 +1,99 @@
+def is_one_digit(v):
+    if -10 < v < 10 and v % 1 == 0:
+        output = True
+    else:
+        output = False
+    # print(output)
+    return output
+
+
 def check(v1, v2, v3):
-    msg = ""
+    msg = ''
     if is_one_digit(v1) and is_one_digit(v2):
-        msg = msg + " ... lazy"
-    if (v1 == 1 or v2 == 1) and v3 == "*":
-        msg = msg + " ... very lazy"
-    if (v1 == 0 or v2 == 0) and (v3 == "*" or v3 == "+" or v3 == "-"):
-        msg = msg + " ... very, very lazy"
-    if msg != "":
-        msg = "You are" + msg
+        msg += msg_6
+    if (v1 == 1 or v2 == 1) and v3 == '*':
+        msg += msg_7
+    if (v1 == 0 or v2 == 0) and (v3 == '*' or v3 == '+' or v3 == '-'):
+        msg += msg_8
+    if msg != '':
+        msg = msg_9 + msg
         print(msg)
 
 
-def is_one_digit(v):
-    if (v > -10) and (v < 10) and float(v) % 1 == 0:
-        return True
-    return False
-
-
-memory = "0"
+msg_0 = "Enter an equation"
+msg_1 = "Do you even know what numbers are? Stay focused!"
+msg_2 = "Yes ... an interesting math operation. You've slept through all classes, haven't you?"
+msg_3 = "Yeah... division by zero. Smart move..."
+msg_4 = "Do you want to store the result? (y / n):"
+msg_5 = "Do you want to continue calculations? (y / n):"
+msg_6 = " ... lazy"
+msg_7 = " ... very lazy"
+msg_8 = " ... very, very lazy"
+msg_9 = "You are"
+msg_10 = "Are you sure? It is only one digit! (y / n)"
+msg_11 = "Don't be silly! It's just one number! Add to the memory? (y / n)"
+msg_12 = "Last chance! Do you really want to embarrass yourself? (y / n)"
+memory = 0
 while True:
-    print("Enter an equation")
+    print(msg_0)
     calc = input()
     x, oper, y = calc.split()
-    x_type = x.replace('.', '').isdigit()
-    y_type = y.replace('.', '').isdigit()
-    operators = ['+', '-', '*', '/']
-    if x == "M":
+    if x == 'M':
         x = memory
-        x_type = True
-    if y == "M":
+    if y == 'M':
         y = memory
-        y_type = True
-    if x_type is False or y_type is False:
-        print("Do you even know what numbers are? Stay focused!")
+    if not str(x).replace('.', '').isdigit() or not str(y).replace('.', '').isdigit():
+        print(msg_1)
         continue
-    if oper not in operators:
-        print("Yes ... an interesting math operation. You've slept through all classes, haven't you?")
-        continue
-    else:
-        x = float(x)
-        y = float(y)
-        check(x, y, oper)
-        if oper == "+":
-            result = (x + y)
-        elif oper == "-":
-            result = x - y
-        elif oper == "*":
-            result = x * y
+    if oper in ['+', '-', '*', '/']:
+        check(float(x), float(y), oper)
+        if oper == '+':
+            result = float(x) + float(y)
+        elif oper == '-':
+            result = float(x) - float(y)
+        elif oper == '*':
+            result = float(x) * float(y)
         else:
-            if oper == "/" and y != 0:
-                result = x / y
+            if float(y) != 0:
+                result = float(x) / float(y)
             else:
-                print("Yeah... division by zero. Smart move...")
+                print(msg_3)
                 continue
         print(result)
         while True:
-            answer = input("Do you want to store the result? (y / n):")
-            if answer == "y":
+            answer = input(msg_4)
+            if answer == 'y':
                 if is_one_digit(result):
-                    msg = {"msg_10": "Are you sure? It is only one digit! (y / n)",
-                           "msg_11": "Don't be silly! It's just one number! Add to the memory? (y / n)",
-                           "msg_12": "Last chance! Do you really want to embarrass yourself? (y / n)"}
                     msg_index = 10
                     while True:
-                        answer = input(msg["msg_" + str(msg_index)])
-                        if answer == "y":
+                        answer = input(eval('msg_' + str(msg_index)))
+                        if answer == 'y':
                             if msg_index < 12:
                                 msg_index += 1
+                                continue
                             else:
                                 memory = result
                                 break
-                        elif answer == "n":
-                            break
                         else:
-                            continue
-                    break
+                            if answer == 'n':
+                                break
+                            else:
+                                continue
                 else:
                     memory = result
-                    break
-            elif answer == "n":
                 break
-            else:
-                continue
+            if answer == 'n':
+                break
+            continue
         while True:
-            answer = input("Do you want to continue calculations? (y / n):")
-            if answer != "y" and answer != "n":
-                continue
-            else:
+            answer = input(msg_5)
+            if answer == 'y' or answer == 'n':
                 break
-        if answer == "y":
+            continue
+        if answer == 'y':
             continue
         else:
             break
+    else:
+        print(msg_2)
+        continue

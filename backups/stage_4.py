@@ -1,4 +1,5 @@
-# Stage 5/5: Saving memory
+# Project: Honest Calculator
+# Stage 4/5: The laziness test
 msg_0 = "Enter an equation\n"
 msg_1 = "Do you even know what numbers are? Stay focused!"
 msg_2 = "Yes ... an interesting math operation. You've slept through all classes, haven't you?"
@@ -9,9 +10,6 @@ msg_6 = " ... lazy"
 msg_7 = " ... very lazy"
 msg_8 = " ... very, very lazy"
 msg_9 = "You are"
-msg_10 = "Are you sure? It is only one digit! (y / n)\n"
-msg_11 = "Don't be silly! It's just one number! Add to the memory? (y / n)\n"
-msg_12 = "Last chance! Do you really want to embarrass yourself? (y / n)\n"
 memory = "0"
 
 
@@ -52,7 +50,7 @@ while True:
             elif oper == "*":
                 result = float(x) * float(y)
             elif oper == "/" and y != "0":
-                result = float(x) / float(y)
+                result = float(x) + float(y)
             else:
                 print(msg_3)
                 continue
@@ -60,20 +58,7 @@ while True:
             while True:
                 answer = input(msg_4)
                 if answer == "y":
-                    if is_one_digit(result):
-                        msg_index = 10
-                        while True:
-                            answer_2 = input(eval("msg_" + str(msg_index)))
-                            if answer_2 == "n":
-                                break
-                            elif answer_2 == "y":
-                                if msg_index < 12:
-                                    msg_index += 1
-                                    continue
-                                memory = str(result)
-                                break
-                    else:
-                        memory = str(result)
+                    memory = str(result)
                     break
                 elif answer == "n":
                     break
